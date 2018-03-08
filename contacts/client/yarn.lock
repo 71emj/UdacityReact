@@ -1332,9 +1332,9 @@ capture-stack-trace@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/capture-stack-trace/-/capture-stack-trace-1.0.0.tgz#4a6fa07399c26bba47f0b2496b4d0fb408c5550d"
 
-case-compare@^1.3.6:
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/case-compare/-/case-compare-1.3.6.tgz#5fe23523fee3b42318efad878af8d8318da5d7c1"
+case-compare@^1.3.7:
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/case-compare/-/case-compare-1.3.7.tgz#7c02cbdf700199ade1235ba2f7656d8e09bfb203"
 
 case-sensitive-paths-webpack-plugin@2.1.1:
   version "2.1.1"
