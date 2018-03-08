@@ -38,7 +38,7 @@ class List extends Component {
           <div className="showing-contacts">
             {`Search showing ${users.length} out of ${contacts.length} contacts,`}
             <button value="" onClick={this.searchHandler}>reset?</button>
-            <a href="/addContact">test Link</a>
+            <a href="./addContact">test Link</a>
           </div>
         }
         <ol className="contact-list">
