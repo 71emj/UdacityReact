@@ -57,3 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+# udacity react starters
+reactnd-contacts-complete/
+reactnd-contacts-server/
