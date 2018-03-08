@@ -1,40 +1,42 @@
 import React, { Component } from 'react';
+import Compare from "case-compare";
 import List from "./List";
+import { getAll, remove, create } from "./utils/ContactsAPI";
+import { searchOthers, search } from "./utils/Utils";
+import "./index.css";
 
-const contacts = [
-  {
-    "id": "ryan",
-    "name": "Ryan Florence",
-    "email": "ryan@reacttraining.com",
-    "avatarURL": "http://localhost:5001/ryan.jpg"
-  },
-  {
-    "id": "michael",
-    "name": "Michael Jackson",
-    "email": "michael@reacttraining.com",
-    "avatarURL": "http://localhost:5001/michael.jpg"
-  },
-  {
-    "id": "tyler",
-    "name": "Tyler McGinnis",
-    "email": "tyler@reacttraining.com",
-    "avatarURL": "http://localhost:5001/tyler.jpg"
-  }
-]
-
-function search(array) {
-  return (prop, value) => array.filter(elem => {
-    return elem.id === value;
-  })[0];
-}
-const fetchUser = search(contacts);
+const compare = new Compare();
 
 class App extends Component {
+  state = {
+    contacts: []
+  }
+
+  componentDidMount() {
+    getAll().then(contacts => this.setState({ contacts }));
+  }
+
+  delContact = evt => {
+    const { id } = evt.target;
+    const { contacts } = this.state;
+    const findUser = search(contacts);
+    const user = findUser("id", id)[0];
+    remove(user)
+      .then(contact => {
+        const remaining = searchOthers(contacts);
+        this.setState({ contacts: remaining("id", contact.id) })
+      })
+      .catch(console.log.bind(console));
+  }
+
   render() {
+    const { contacts } = this.state;
+    cosnt route = window.location.pathname.match(/\/(\w+)$/g).toString().substring(1);
     return (
-      <ol className="contact-list">
-        { List(contacts) }
-      </ol>
+      compare({ route })
+        .toCase("addContact", <h1>Hello World</h1>)
+        .toAllOther(<List contacts={contacts} delContact={this.delContact} />)
+        .Ended((debug, route) => route)
     )
   }
 }

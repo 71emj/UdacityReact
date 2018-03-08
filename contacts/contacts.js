@@ -49,7 +49,7 @@ const add = (token, contact) => {
 const remove = (token, id) => {
   const data = get(token)
   const contact = data.contacts.find(c => c.id === id)
-
+  console.log(contact);
   if (contact) {
     data.contacts = data.contacts.filter(c => c !== contact)
   }
