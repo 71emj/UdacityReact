@@ -31,7 +31,9 @@ class App extends Component {
 
   render() {
     const { contacts } = this.state;
-    const route = window.location.pathname.match(/\/(\w+)$/g).toString().substring(1);
+    const regexp = new RegExp(/\/(\w+)$/, "g");
+    const pathname = window.location.pathname;
+    const route = regexp.test(pathname) ? pathname.match(regexp).toString().substring(1) : "";
     return (
       compare({ route })
         .toCase("addContact", <h1>Hello World</h1>)
