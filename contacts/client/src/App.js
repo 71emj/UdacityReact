@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Compare from "case-compare";
+import Router from "case-compare";
 import List from "./List";
 import { getAll, remove, create } from "./utils/ContactsAPI";
 import { searchOthers, search } from "./utils/Utils";
 import "./index.css";
 
-const compare = new Compare();
+const router = new Router({ type: "router" });
 
 class App extends Component {
   state = {
@@ -33,12 +33,13 @@ class App extends Component {
     const { contacts } = this.state;
     const regexp = new RegExp(/\/(\w+)$/, "g");
     const pathname = window.location.pathname;
-    const route = regexp.test(pathname) ? pathname.match(regexp).toString().substring(1) : "";
+    
     return (
-      compare({ route })
-        .toCase("addContact", <h1>Hello World</h1>)
-        .toAllOther(<List contacts={contacts} delContact={this.delContact} />)
-        .Ended((debug, route) => route)
+      router({ route: window.location.pathname })
+        .toPath("/addContact", <h1>Hello World</h1>)
+        .Ended((debug, route) =>
+          route || (<List contacts={contacts} delContact={this.delContact} />)
+        )
     )
   }
 }
