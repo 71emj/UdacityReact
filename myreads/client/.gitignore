@@ -1,3 +1,8 @@
 node_modules
 yarn.lock
 .DS_Store
+
+# instructions
+CONTRIBUTING.md
+SEARCH_TERMS.md
+UDACITY_README.md
