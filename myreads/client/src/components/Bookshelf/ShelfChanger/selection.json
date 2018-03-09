@@ -1,0 +1,27 @@
+[
+  {
+    "value": "none",
+    "text": "Move to...",
+    "disabled": true
+  },
+  {
+    "value": "currentlyReading",
+    "text": "Currently Reading",
+    "disabled": false
+  },
+  {
+    "value": "wantToRead",
+    "text": "Want to Read",
+    "disabled": false
+  },
+  {
+    "value": "read",
+    "text": "Read",
+    "disabled": false
+  },
+  {
+    "value": "none",
+    "text": "None",
+    "disabled": false
+  }
+]
