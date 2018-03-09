@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { search, escapeRegExp } from "./utils/Utils";
 import PropTypes from "prop-types";
 
@@ -33,12 +34,15 @@ class List extends Component {
             onChange={this.searchHandler}
             value={query}
           />
+          {/* <a href="/create" className="add-contact">Add Contact</a> */}
+          <Link to="/create"
+            className="add-contact"
+          >Add Contact</Link>
         </div>
         { query &&
           <div className="showing-contacts">
             {`Search showing ${users.length} out of ${contacts.length} contacts,`}
             <button value="" onClick={this.searchHandler}>reset?</button>
-            <a href="./addContact">test Link</a>
           </div>
         }
         <ol className="contact-list">
