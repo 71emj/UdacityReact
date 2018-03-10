@@ -1,14 +1,14 @@
 import React from "react";
 import selection from "./selection.json";
 
-const test = props => (
+const ShelfChanger = props => (
   <div className="book-shelf-changer">
-    <select>
+    <select name={props.name} defaultValue={props.onShelf}
+      onChange={props.changeHandler}>
       {selection.map((option, index) => (
         <option
           key={option.value + index}
           value={option.value}
-          onChange={props.onChange}
           disabled={option.disabled}
           children={option.text}
         />
@@ -17,11 +17,4 @@ const test = props => (
   </div>
 );
 
-class shelfChanger extends React.Component {
-  render() {
-    console.log(this.props);
-    return test(this.props);
-  }
-}
-
-export default shelfChanger;
+export default ShelfChanger;
