@@ -3,7 +3,7 @@ import selection from "./selection.json";
 
 const ShelfChanger = props => (
   <div className="book-shelf-changer">
-    <select name={props.name} defaultValue={props.onShelf}
+    <select name={props.name} defaultValue={props.onShelf || "none"}
       onChange={props.changeHandler}>
       {selection.map((option, index) => (
         <option

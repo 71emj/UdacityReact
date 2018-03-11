@@ -1,85 +1,104 @@
 import React from "react";
-import Router from "case-compare";
-import HomePage from "./components/HomePage";
-import SearchPage from "./components/SearchPage";
-import { getAll, search, update } from "./util/BooksAPI";
-import { isType, searchBy } from "./util/Helper";
+import { Router, Switch } from "react-router-dom";
+import Compare from "case-compare";
+import HomePage from "./routes/HomePage";
+import SearchPage from "./routes/SearchPage";
+import { Helper, BooksAPI } from "./util";
 import "./App.css";
 
-const router = new Router({ type: "router" });
+const router = Compare({ type: "router" });
+const { searchBy, eq } = Helper;
 class BooksApp extends React.Component {
   state = {
-    all: [],
-    reading: [],
-    wantTo: [],
-    read: [],
-    searchedResult: []
+    library: [],
+    searchedResult: [],
+    queryError: false
   };
 
   componentDidMount() {
-    this.getAllAndPutToShelf();
+    return this.getAllAndPutToShelves();
   }
 
-  getAllAndPutToShelf() {
-    getAll()
+  getAllAndPutToShelves() {
+    BooksAPI.getAll()
       .then(collection => {
-        const shelves = { all: [], reading: [], wantTo: [], read: [] };
-        const sort = (shelves, book) => {
-          book.shelf.match(/read/) && shelves["read"].push(book);
-          book.shelf.match(/reading/i) && shelves["reading"].push(book);
-          book.shelf.match(/wantTo/i) && shelves["wantTo"].push(book);
-          shelves["all"].push(book);
-          return shelves;
-        };
-        this.setState(collection.reduce(sort, shelves));
+        return this.setState({ library: collection });
       })
       .catch(console.error.bind(console));
   }
 
   searchByQuery = query => {
-    search(query)
+    BooksAPI.search(query)
       .then(res => {
-        const { searchResults } = this.state;
-        if (!isType(res, "array")) {
-          throw new Error("OOPS, it seems like we encounter some problem contructing query.");
+        if (!Array.isArray(res)) {
+          throw new Error(
+            "OOPS, it seems like we encounter some problem formatting our query."
+          );
         }
-        return this.setState({ searchedResult: res });
+        return this.setState({ searchedResult: res, queryError: false });
       })
-      .catch(console.error.bind(console));
-  }
+      .catch(err => {
+        console.error(err);
+        return this.setState({ searchedResult: [], queryError: true });
+      });
+  };
 
-  changeShelf = updateInfo => {
-    const { name: id, value: shelf, caller } = updateInfo;
-    const findId = searchBy("id", this.state[caller]);
-    update(findId(id)[0], shelf)
+  changeShelf = evt => {
+    const { name: id, value: shelf, emitter } = evt;
+    const { fieldName, searchField } = emitter;
+    const findId = searchBy("id", searchField);
+    BooksAPI.update(findId(id)[0], shelf)
       .then(res => {
-        console.log(res);
+        if (res.error) {
+          throw new Error("err");
+        }
+        // confirm change is actually carried
+        let result;
+        Object.entries(res).forEach(entry => {
+          const [name, val] = entry;
+          if (result && result[0]) {
+            return;
+          }
+          result = val.filter(refId => eq(refId, id) && eq(name, shelf));
+        });
+        const updateLib = searchField.map(book => {
+          if (
+            eq(book.id, result[0]) ||
+            (eq(shelf, "none") && eq(book.id, id))
+          ) {
+            book.shelf = shelf;
+          }
+          return book;
+        });
+        return this.setState({ [fieldName]: updateLib });
       })
       .catch(console.error.bind(console));
-  }
+  };
 
   render() {
     const { changeShelf, searchByQuery, state } = this;
+    const { searchedResult, library, queryError } = state;
     const pathname = window.location.pathname;
+
     return (
       <div className="app">
-        {
-          router({ pathname })
-            .toManyPath(
-              ["/", "/index", "/home"],
-              <HomePage update={changeShelf} books={state} />
-            )
-            .toManyPath(
-              ["/search", "/find", "/books"],
-              <SearchPage
-                update={changeShelf}
-                search={searchByQuery}
-                searched={state.searchedResult}
-              />
-            )
-            .toAllOther(<h1>OOPS, 404</h1>)
-            .Ended((debug, route) => route)
-        }
+        {router({ pathname })
+          .toManyPath(
+            ["/", "/index", "/home"],
+            <HomePage update={changeShelf} books={library} />
+          )
+          .toManyPath(
+            ["/search", "/find", "/books"],
+            <SearchPage
+              update={changeShelf}
+              search={searchByQuery}
+              searched={searchedResult}
+              library={library}
+              queryError={queryError}
+            />
+          )
+          .toAllOther(<h1>OOPS, 404</h1>)
+          .Ended((debug, route) => route)}
       </div>
     );
   }

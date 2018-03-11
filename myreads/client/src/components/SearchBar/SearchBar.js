@@ -1,7 +1,8 @@
 import React from "react";
-import { throttle } from "../../util/Helper"
+import { Helper } from "../../util"
 
 const SearchBar = props => {
+  const { throttle } = Helper;
   const throttledSearch = throttle(props.searchHandler, 800);
   return (
     <div className="search-books-bar">
