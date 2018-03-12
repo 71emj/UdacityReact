@@ -12,7 +12,7 @@ const SearchPage = props => {
     searchField: searched
   });
 
-  // assigning shelf prop to books already in library
+  /* assigning shelf prop to books already in library */
   const libraryBooks = library.map(book => ({
     id: book.id,
     shelf: book.shelf
@@ -21,7 +21,7 @@ const SearchPage = props => {
   const searchedWithShelf = searched.map(book => {
     const id = book.id;
     const matchResult = findId(id)[0];
-    book.shelf = matchResult ? matchResult.shelf : "none";
+    book.shelf = matchResult ? matchResult.shelf : null;
     return book;
   });
   return (

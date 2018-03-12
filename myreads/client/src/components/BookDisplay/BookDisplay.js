@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Book from "../Book";
 
 const BookDisplay = props => (
@@ -21,5 +22,10 @@ const BookDisplay = props => (
     ))}
   />
 );
+
+const propTypes = {
+  collection: PropTypes.array.isRequired,
+  changeHandler: PropTypes.array.isRequired
+}
 
 export default BookDisplay;

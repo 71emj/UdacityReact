@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import BookDisplay from "../BookDisplay";
 
 const SearchResults = props => (
@@ -11,5 +12,11 @@ const SearchResults = props => (
     />
   </div>
 );
+
+const propTypes = {
+  error: PropTypes.boolean,
+  collection: PropTypes.array.isRequired,
+  changeHandler: PropTypes.func.isRequired
+};
 
 export default SearchResults;

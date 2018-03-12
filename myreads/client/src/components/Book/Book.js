@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import ShelfChanger from "../ShelfChanger";
 
 const styling = {
@@ -32,6 +33,15 @@ const Book = props => (
       children={props.authors}
     />
   </div>
-)
+);
+
+const propTypes = {
+  cover: PropTypes.string,
+  shelfChanger: PropTypes.func.isRequired,
+  refId: PropTypes.string.isRequired,
+  shelfName: PropTypes.string,
+  title: PropTypes.string,
+  authors: PropTypes.string
+};
 
 export default Book;

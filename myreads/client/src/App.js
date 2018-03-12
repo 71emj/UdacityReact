@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Compare from "case-compare";
 import HomePage from "./routes/HomePage";
 import SearchPage from "./routes/SearchPage";
@@ -9,6 +9,9 @@ import "./App.css";
 const router = Compare({ type: "router" });
 const { searchBy, eq } = Helper;
 class BooksApp extends React.Component {
+  /** TODO could implement query history and autocomplete funciton
+  * filter out failed queries and only store successful ones in state
+  */
   state = {
     library: [],
     searchedResult: [],
@@ -39,7 +42,7 @@ class BooksApp extends React.Component {
       })
       .catch(err => {
         console.error(err);
-        return this.setState({ searchedResult: [], queryError: true });
+        return this.setState({ searchedResult: [], queryError: query ? true : false });
       });
   };
 
@@ -52,7 +55,7 @@ class BooksApp extends React.Component {
         if (res.error) {
           throw new Error("err");
         }
-        // confirm change is actually carried
+        /* confirm server update successful */
         let result;
         Object.entries(res).forEach(entry => {
           const [name, val] = entry;
@@ -100,6 +103,22 @@ class BooksApp extends React.Component {
           .toAllOther(<h1>OOPS, 404</h1>)
           .Ended((debug, route) => route)}
       </div>
+      /*{ <div className="app">
+        <Switch>
+          <Route exact path="/" render={() =>
+            <HomePage update={changeShelf} books={library} />
+          }/>
+          <Route path="/search" render={({ history }) =>
+            <SearchPage
+              update={changeShelf}
+              search={searchByQuery}
+              searched={searchedResult}
+              library={library}
+              queryError={queryError}
+            />
+          }/>
+        </Switch>
+      </div> }*/
     );
   }
 }

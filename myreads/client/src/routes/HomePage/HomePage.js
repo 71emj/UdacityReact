@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types"
 import BookShelf from "../../components/BookShelf";
 import { Helper } from '../../util';
@@ -39,6 +40,7 @@ const HomePage = props => {
       </div>
       <div className="open-search">
         <a href="/search" children="Add a book" />
+        {/* <Link to="/search" children="Add a book"/> */}
       </div>
     </div>
   );

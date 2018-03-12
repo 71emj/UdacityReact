@@ -1,12 +1,15 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { Helper } from "../../util"
 
 const SearchBar = props => {
   const { throttle } = Helper;
-  const throttledSearch = throttle(props.searchHandler, 800);
+  const throttledSearch = throttle(props.searchHandler, 500);
   return (
     <div className="search-books-bar">
       <a href="/" className="close-search" children="Close"/>
+      {/* <Link to="/" className="close-search" children="Close"/> */}
       <div className="search-books-input-wrapper">
         <input type="text"
           placeholder="Search by title or author"
@@ -18,6 +21,9 @@ const SearchBar = props => {
       </div>
     </div>
   );
+};
+const propTypes = {
+  searchHandler: PropTypes.func.isRequired
 };
 
 export default SearchBar;
