@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Currently Reading",
+    "name": "currentlyReading",
+    "alias": "reading"
+  },
+  {
+    "title": "Want to Read",
+    "name": "wantToRead",
+    "alias": "wantTo"
+  },
+  {
+    "title": "Read",
+    "name": "read",
+    "alias": "read"
+  }
+]
