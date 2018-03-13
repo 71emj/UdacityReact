@@ -8,8 +8,7 @@ const SearchBar = props => {
   const throttledSearch = throttle(props.searchHandler, 500);
   return (
     <div className="search-books-bar">
-      <a href="/" className="close-search" children="Close"/>
-      {/* <Link to="/" className="close-search" children="Close"/> */}
+      <Link to="/" className="close-search" children="Close"/>
       <div className="search-books-input-wrapper">
         <input type="text"
           placeholder="Search by title or author"
@@ -22,7 +21,7 @@ const SearchBar = props => {
     </div>
   );
 };
-const propTypes = {
+SearchBar.propTypes = {
   searchHandler: PropTypes.func.isRequired
 };
 

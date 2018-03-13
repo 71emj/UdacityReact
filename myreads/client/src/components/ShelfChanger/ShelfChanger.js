@@ -18,11 +18,10 @@ const ShelfChanger = props => (
   </div>
 );
 
-const propTypes = {
+ShelfChanger.propTypes = {
   name: PropTypes.string.isRequired,
   onShelf: PropTypes.string,
-  changeHandler: PropTypes.func.isRequired,
-  selection: PropTypes.array.isRequired
+  changeHandler: PropTypes.func.isRequired
 };
 
 export default ShelfChanger;

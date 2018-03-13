@@ -12,7 +12,7 @@ const BookShelf = props => (
   </div>
 );
 
-const propTypes = {
+BookShelf.propTypes = {
   shelfName: PropTypes.string,
   collection: PropTypes.array,
   changeHandler: PropTypes.func.isRequired

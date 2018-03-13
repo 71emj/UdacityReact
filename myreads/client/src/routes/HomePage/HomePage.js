@@ -29,14 +29,13 @@ const HomePage = props => {
         ))}
       />
       <div className="open-search">
-        <a href="/search" children="Add a book" />
-        {/* <Link to="/search" children="Add a book"/> */}
+        <Link to="/search" children="Add a book"/>
       </div>
     </div>
   );
 };
 
-const propTypes = {
+HomePage.propTypes = {
   update: PropTypes.func.isRequired,
   books: PropTypes.array.isRequired
 };

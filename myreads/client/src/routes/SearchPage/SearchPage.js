@@ -36,7 +36,7 @@ const SearchPage = props => {
   );
 };
 
-const propTypes = {
+SearchPage.propTypes = {
   update: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
   searched: PropTypes.array.isRequired

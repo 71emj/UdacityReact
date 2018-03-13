@@ -10,32 +10,28 @@ const styling = {
 
 const Book = props => (
   <div className="book">
-    <div key="cover" className="book-top">
-      <div key="cover"
-        className="book-cover"
+    <div className="book-top">
+      <div className="book-cover"
         style={Object.assign(
           styling,
           { backgroundImage: `url(${props.cover})` }
         )}
       />
-      <ShelfChanger key="category handler"
+      <ShelfChanger name={props.refId}
         changeHandler={props.shelfChanger}
-        name={props.refId}
         onShelf={props.shelfName}
       />
     </div>
-    <div key="title"
-      className="book-title"
+    <div className="book-title"
       children={props.title}
     />
-    <div key="author"
-      className="book-authors"
+    <div className="book-authors"
       children={props.authors}
     />
   </div>
 );
 
-const propTypes = {
+Book.propTypes = {
   cover: PropTypes.string,
   shelfChanger: PropTypes.func.isRequired,
   refId: PropTypes.string.isRequired,

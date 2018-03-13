@@ -1,12 +1,10 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Compare from "case-compare";
 import HomePage from "./routes/HomePage";
 import SearchPage from "./routes/SearchPage";
 import { Helper, BooksAPI } from "./util";
 import "./App.css";
 
-const router = Compare({ type: "router" });
 const { searchBy, eq } = Helper;
 class BooksApp extends React.Component {
   /** TODO could implement query history and autocomplete funciton
@@ -56,14 +54,13 @@ class BooksApp extends React.Component {
           throw new Error("err");
         }
         /* confirm server update successful */
-        let result;
-        Object.entries(res).forEach(entry => {
+        const result = Object.entries(res).reduce((result, entry) => {
           const [name, val] = entry;
-          if (result && result[0]) {
-            return;
+          if (result[0]) {
+            return result;
           }
-          result = val.filter(refId => eq(refId, id) && eq(name, shelf));
-        });
+          return val.filter(refId => eq(refId, id) && eq(name, shelf));
+        }, []);
         const updateLib = searchField.map(book => {
           if (
             eq(book.id, result[0]) ||
@@ -81,29 +78,8 @@ class BooksApp extends React.Component {
   render() {
     const { changeShelf, searchByQuery, state } = this;
     const { searchedResult, library, queryError } = state;
-    const pathname = window.location.pathname;
-
     return (
       <div className="app">
-        {router({ pathname })
-          .toManyPath(
-            ["/", "/index", "/home"],
-            <HomePage update={changeShelf} books={library} />
-          )
-          .toManyPath(
-            ["/search", "/find", "/books"],
-            <SearchPage
-              update={changeShelf}
-              search={searchByQuery}
-              searched={searchedResult}
-              library={library}
-              queryError={queryError}
-            />
-          )
-          .toAllOther(<h1>OOPS, 404</h1>)
-          .Ended((debug, route) => route)}
-      </div>
-      /*{ <div className="app">
         <Switch>
           <Route exact path="/" render={() =>
             <HomePage update={changeShelf} books={library} />
@@ -118,7 +94,7 @@ class BooksApp extends React.Component {
             />
           }/>
         </Switch>
-      </div> }*/
+      </div>
     );
   }
 }

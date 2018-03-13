@@ -13,8 +13,8 @@ const SearchResults = props => (
   </div>
 );
 
-const propTypes = {
-  error: PropTypes.boolean,
+SearchResults.propTypes = {
+  error: PropTypes.bool,
   collection: PropTypes.array.isRequired,
   changeHandler: PropTypes.func.isRequired
 };

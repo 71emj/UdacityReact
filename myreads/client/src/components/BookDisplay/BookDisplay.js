@@ -14,7 +14,7 @@ const BookDisplay = props => (
             book.authors && book.authors.join(", ")
           }
           cover={
-            book.imageLinks && book.imageLinks["thumbnail"]
+            book.imageLinks ? book.imageLinks["thumbnail"] : 'url("./image/image_not_avail.png")'
           }
           refId={book.id}
         />
@@ -23,9 +23,9 @@ const BookDisplay = props => (
   />
 );
 
-const propTypes = {
+BookDisplay.propTypes = {
   collection: PropTypes.array.isRequired,
-  changeHandler: PropTypes.array.isRequired
+  changeHandler: PropTypes.func.isRequired
 }
 
 export default BookDisplay;
