@@ -11,7 +11,6 @@ const ShelfChanger = props => (
           key={option.value + index}
           value={option.value}
           disabled={option.disabled}
-          selected={!props.onShelf && option.disabled}
           children={option.text}
         />
       ))}

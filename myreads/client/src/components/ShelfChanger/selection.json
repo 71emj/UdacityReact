@@ -5,6 +5,11 @@
     "disabled": true
   },
   {
+    "value": "none",
+    "text": "None",
+    "disabled": false
+  },
+  {
     "value": "currentlyReading",
     "text": "Currently Reading",
     "disabled": false
@@ -17,11 +22,6 @@
   {
     "value": "read",
     "text": "Read",
-    "disabled": false
-  },
-  {
-    "value": "none",
-    "text": "None",
     "disabled": false
   }
 ]
